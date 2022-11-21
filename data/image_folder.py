@@ -15,9 +15,13 @@ IMG_EXTENSIONS = [
     '.tif', '.TIF', '.tiff', '.TIFF',
 ]
 
+TXT_EXTENSIONS=['.txt']
 
 def is_image_file(filename):
     return any(filename.endswith(extension) for extension in IMG_EXTENSIONS)
+
+def is_txt_file(filename):
+    return any(filename.endswith(extension) for extension in TXT_EXTENSIONS)
 
 
 def make_dataset(dir, max_dataset_size=float("inf")):
@@ -30,6 +34,18 @@ def make_dataset(dir, max_dataset_size=float("inf")):
                 path = os.path.join(root, fname)
                 images.append(path)
     return images[:min(max_dataset_size, len(images))]
+
+def make_txt_dataset(dir, max_dataset_size=float("inf")):
+    annotated_txts = []
+    assert os.path.isdir(dir), '%s is not a valid directory' % dir
+
+    for root, _, fnames in sorted(os.walk(dir)):
+        for fname in fnames:
+            if is_txt_file(fname):
+                path = os.path.join(root, fname)
+                annotated_txts.append(path)
+    return  annotated_txts[:min(max_dataset_size, len(annotated_txts))]
+
 
 
 def default_loader(path):
