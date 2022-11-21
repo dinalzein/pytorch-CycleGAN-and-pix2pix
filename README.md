@@ -21,9 +21,9 @@ __Adversarial Map Generation Framework.__ The model consists of two mapping func
 
 
 ## Datasets
-We are using the [Plan IGN](https://www.geoportail.gouv.fr) dataset. To get the text annotated dataset, we evaluated [TESTER](https://github.com/mlpc-ucsd/TESTR) using the [TotalText pre-trained model](https://ucsdcloud-my.sharepoint.com/:u:/g/personal/xiz102_ucsd_edu/ESwSFxppsplEiEaUphJB0TABkIKoRvIljkVIazPUNEXI7g?e=Q8zJ0Q) on the Cassini dataset. For more information on how to evaluate [TESTR](https://github.com/mlpc-ucsd/TESTR), please refer to the [README](https://github.com/mlpc-ucsd/TESTR/blob/main/README.md).
+We are using the [Plan IGN](https://www.geoportail.gouv.fr) dataset. To get the text annotations, we evaluated [TESTER](https://github.com/mlpc-ucsd/TESTR) using the [TotalText pre-trained model](https://ucsdcloud-my.sharepoint.com/:u:/g/personal/xiz102_ucsd_edu/ESwSFxppsplEiEaUphJB0TABkIKoRvIljkVIazPUNEXI7g?e=Q8zJ0Q) on the Plan IGN dataset. For more information on how to evaluate [TESTR](https://github.com/mlpc-ucsd/TESTR), please refer to the [README](https://github.com/mlpc-ucsd/TESTR/blob/main/README.md).
 
-Extract text annotated Plan IGN under [datasets](./datasets) and make sure you organize it as follows:
+Extract Plan IGN dataset with its annotations (annotations are only for train and validation splits) under [datasets](./datasets) and make sure you organize it as follows:
 
 ```
 - datasets
@@ -35,7 +35,7 @@ Extract text annotated Plan IGN under [datasets](./datasets) and make sure you o
   |   | - valA
   |   | - valB
 ```
-where ortho images placed under A and maps placed under B.
+where ortho images placed under A and maps placed under B. Note that the text annotations files are only in trainB and valB where they consist of polygonal annotations for the named entities in maps.
 
 ## Prerequisites
 - Linux or macOS
