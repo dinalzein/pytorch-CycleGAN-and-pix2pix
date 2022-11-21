@@ -54,7 +54,7 @@ Create and install environment for conda users:
 # Create and install environment
 conda env create -f environment.yml
 # Activate environment
-conda activate CycleGAN
+conda activate AdversarialMapGeneration
 ```
 
 for pip users:
@@ -71,19 +71,19 @@ source .venv/bin/activate
 ```
 
 
-## Train/Test CycleGAN
-To train cycleGAN on the Plan IGN maps dataset (should be placed in [datasets](./datasets)), run:
+## Train/Test Adversarial Map Generation
+To train Adversarial Map Generation on the Plan IGN maps dataset (should be placed in [datasets](./datasets)), run:
 
 ```bash
-python train.py --dataroot ./datasets/PlanIGN --name planIGN_cyclegan --model cycle_gan
+python train.py --dataroot ./datasets/PlanIGN --name planIGN_AdversarialMapGeneration --model cycle_gan
 ```
-To see more intermediate results, check out `./checkpoints/planIGN_cyclegan/web/index.html`.
+To see more intermediate results, check out `./checkpoints/planIGN_AdversarialMapGeneration/web/index.html`.
 
 To test the model, run:
 ```bash
-python test.py --dataroot ./datasets/PlanIGN --name planIGN_cyclegan --model cycle_gan
+python test.py --dataroot ./datasets/PlanIGN --name planIGN_AdversarialMapGeneration --model cycle_gan
 ```
-The test results will be saved to a html file here: `./results/planIGN_cyclegan/latest_test/index.html`.
+The test results will be saved to a html file here: `./results/planIGN_AdversarialMapGeneration/latest_test/index.html`.
 
 ## Results
 

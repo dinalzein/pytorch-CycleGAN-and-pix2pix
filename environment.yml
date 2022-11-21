@@ -1,4 +1,4 @@
-name: CycleGAN
+name: AdversarialMapGeneration
 channels:
 - pytorch
 - defaults
