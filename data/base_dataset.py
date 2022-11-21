@@ -6,9 +6,9 @@ import random
 import numpy as np
 import torch.utils.data as data
 from PIL import Image
-import torchvision.transforms as transforms
+from torchvision import transforms
 from abc import ABC, abstractmethod
-
+import torchvision
 
 class BaseDataset(data.Dataset, ABC):
     """This class is an abstract base class (ABC) for datasets.
@@ -78,19 +78,19 @@ def get_params(opt, size):
     return {'crop_pos': (x, y), 'flip': flip}
 
 
-def get_transform(opt, params=None, grayscale=False, method=Image.BICUBIC, convert=True):
+def get_transform(opt, params=None, grayscale=False, method=3, convert=True):
     transform_list = []
     if grayscale:
         transform_list.append(transforms.Grayscale(1))
     if 'resize' in opt.preprocess:
         osize = [opt.load_size, opt.load_size]
-        transform_list.append(transforms.Resize(osize, method))
+        transform_list.append(torchvision.transforms.Resize(osize, method))
     elif 'scale_width' in opt.preprocess:
         transform_list.append(transforms.Lambda(lambda img: __scale_width(img, opt.load_size, opt.crop_size, method)))
 
     if 'crop' in opt.preprocess:
         if params is None:
-            transform_list.append(transforms.RandomCrop(opt.crop_size))
+            transform_list.append(torchvision.transforms.RandomCrop(opt.crop_size))
         else:
             transform_list.append(transforms.Lambda(lambda img: __crop(img, params['crop_pos'], opt.crop_size)))
 
@@ -99,20 +99,20 @@ def get_transform(opt, params=None, grayscale=False, method=Image.BICUBIC, conve
 
     if not opt.no_flip:
         if params is None:
-            transform_list.append(transforms.RandomHorizontalFlip())
+            transform_list.append(torchvision.transforms.RandomHorizontalFlip())
         elif params['flip']:
             transform_list.append(transforms.Lambda(lambda img: __flip(img, params['flip'])))
 
     if convert:
-        transform_list += [transforms.ToTensor()]
+        transform_list += [torchvision.transforms.ToTensor()]
         if grayscale:
-            transform_list += [transforms.Normalize((0.5,), (0.5,))]
+            transform_list += [torchvision.transforms.Normalize((0.5,), (0.5,))]
         else:
-            transform_list += [transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]
-    return transforms.Compose(transform_list)
+            transform_list += [torchvision.transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]
+    return torchvision.transforms.Compose(transform_list)
 
 
-def __make_power_2(img, base, method=Image.BICUBIC):
+def __make_power_2(img, base, method=3):
     ow, oh = img.size
     h = int(round(oh / base) * base)
     w = int(round(ow / base) * base)
@@ -123,7 +123,7 @@ def __make_power_2(img, base, method=Image.BICUBIC):
     return img.resize((w, h), method)
 
 
-def __scale_width(img, target_size, crop_size, method=Image.BICUBIC):
+def __scale_width(img, target_size, crop_size, method=3):
     ow, oh = img.size
     if ow == target_size and oh >= crop_size:
         return img
